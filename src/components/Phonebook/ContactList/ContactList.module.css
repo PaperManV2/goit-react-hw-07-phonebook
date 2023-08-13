@@ -1,0 +1,35 @@
+.contact-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-list__item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.contact-list__item-name {
+  margin-right: 10px;
+}
+
+.contact-list__item-phone {
+  font-weight: bold;
+}
+
+.contact-list__item button {
+  padding: 5px 10px;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.contact-list__item button:hover {
+  background-color: #850705;
+}
