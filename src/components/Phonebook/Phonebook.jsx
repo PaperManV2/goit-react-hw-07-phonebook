@@ -1,11 +1,14 @@
-import { setContacts } from '../../redux/contactsSlice';
-import { setFilter } from '../../redux/filterSlice';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
+import { fetchContacts, saveContact } from '../../redux/contactsSlice';
+import { setFilter } from '../../redux/filterSlice';
 import css from './Phonebook.module.css';
-import React, { useEffect } from 'react';
+import axios from 'axios';
+
+const API_URL = 'https://64b2b86138e74e386d557aa2.mockapi.io/contacts';
 
 const Phonebook = () => {
   const contacts = useSelector(state => state.contacts);
@@ -13,11 +16,25 @@ const Phonebook = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(API_URL);
+        dispatch(fetchContacts(response.data));
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+      }
+    };
 
-  const handleAddContact = newContact => {
-    dispatch(setContacts([...contacts, newContact]));
+    fetchData();
+  }, [dispatch]);
+
+  const handleAddContact = async newContact => {
+    try {
+      const response = await axios.post(API_URL, newContact);
+      dispatch(saveContact(response.data));
+    } catch (error) {
+      console.error('Error saving contact:', error);
+    }
   };
 
   const handleFilterChange = value => {

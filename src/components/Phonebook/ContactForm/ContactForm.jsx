@@ -11,11 +11,15 @@ const ContactForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (name.trim() === '' || phone.trim() === '') {
+      alert('Please enter a name or phone number.');
+      return;
+    }
+    if (!/^\d+$/.test(phone)) {
+      alert('Please enter a valid phone number.');
       return;
     }
 
     const newContact = {
-      id: Date.now().toString(),
       name,
       phone,
     };
